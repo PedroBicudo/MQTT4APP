@@ -7,7 +7,7 @@ def connect_back4app(_id, topico, valor):
 
     insert_data = json.dumps({
         "id": "%s" % _id, 
-        "topico": "%s" % topico, 
+        "topico": "%s" % topico,
         "valor": valor 
     })
 
@@ -22,8 +22,8 @@ def connect_back4app(_id, topico, valor):
         connection.connect()
         connection.request('POST', '/classes/sensor/', insert_data, insert_id
         )
-        results = json.loads(connection.getresponse().read())
-        print(results)
+        results = str(json.loads(connection.getresponse().read()))
+        print("\t%s" %results)
     except NameError:
         print("Erro na conexao")
 
