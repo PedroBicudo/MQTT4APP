@@ -1,5 +1,5 @@
 # MQTT CONFIGURATION
-mqtt_server = "10.0.0.110"
+mqtt_server = "BROKER IP"
 mqtt_port = "1883"
 mqtt_ID = "TCCREDES"
 mqtt_user = "mygarden"
