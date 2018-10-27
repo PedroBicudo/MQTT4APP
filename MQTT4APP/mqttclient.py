@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import connectors as cn
+#from os import system
 from mosquitto_config import \
     mqtt_ID, \
     mqtt_server, \
@@ -36,6 +37,7 @@ def on_message(client, userdata, msg):
                 topic_e -= 5
                 break
             if topic_b > len(topico_mqtt) or topic_b > len(topico_mqtt):
+                #print("NÃo encontrado")
                 break
 
     # Sensor ID

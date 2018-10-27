@@ -1,5 +1,5 @@
 # MQTT CONFIGURATION
-mqtt_server = "IP"
+mqtt_server = "10.0.0.110"
 mqtt_port = "1883"
 mqtt_ID = "TCCREDES"
 mqtt_user = "mygarden"
@@ -16,8 +16,8 @@ topics:
 id  -  topico -  valor
 
 """
-back_app_id = "APP ID"
-back_rest_id = "REST ID"
+back_app_id = "Q68CJmlbatARZBuNm64zHlbQVxPBrXGCv6Wqbloh"
+back_rest_id = "KfCisxdQDCsbqZHYgCFUG9RKu5P8ZISsyWLJ8jLf"
 
 
 
