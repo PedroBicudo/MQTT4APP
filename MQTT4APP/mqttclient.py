@@ -36,7 +36,6 @@ def on_message(client, userdata, msg):
                 topic_e -= 5
                 break
             if topic_b > len(topico_mqtt) or topic_b > len(topico_mqtt):
-                #print("NÃo encontrado")
                 break
 
     # Sensor ID
