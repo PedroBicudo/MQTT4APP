@@ -1,0 +1,7 @@
+user mygarden
+topic /home/horta/#
+
+
+user client
+topic read /home/horta/#
+
