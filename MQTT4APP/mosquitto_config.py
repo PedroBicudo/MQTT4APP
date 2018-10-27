@@ -16,8 +16,8 @@ topics:
 id  -  topico -  valor
 
 """
-back_app_id = "Q68CJmlbatARZBuNm64zHlbQVxPBrXGCv6Wqbloh"
-back_rest_id = "KfCisxdQDCsbqZHYgCFUG9RKu5P8ZISsyWLJ8jLf"
+back_app_id = " APP ID"
+back_rest_id = " REST ID"
 
 
 
