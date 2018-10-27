@@ -1,6 +1,5 @@
 import paho.mqtt.client as mqtt
 import connectors as cn
-#from os import system
 from mosquitto_config import \
     mqtt_ID, \
     mqtt_server, \
