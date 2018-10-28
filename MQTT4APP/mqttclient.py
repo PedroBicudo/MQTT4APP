@@ -19,7 +19,7 @@ def on_message(client, userdata, msg):
     topico = str(msg.topic[18:])
     valor = int(msg.payload)
 
-    print(topico)
+    # Enviar Back4app
     cn.connect_back4app(_id, topico, valor)
 
 
