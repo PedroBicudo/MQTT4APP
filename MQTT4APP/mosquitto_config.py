@@ -2,7 +2,7 @@
 mqtt_server = "BROKER IP"
 mqtt_port = "1883"
 mqtt_ID = "TCCREDES"
-mqtt_user = "mygarden"
+mqtt_user = "client"
 mqtt_passwd = "123"
 """
 Available types of Qos
