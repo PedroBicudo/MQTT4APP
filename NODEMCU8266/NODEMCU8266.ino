@@ -1,14 +1,14 @@
 #include <FS.h>                   //this needs to be first, or it all crashes and burns...
-
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
-
 //needed for library
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>          //https://github.com/tzapu/WiFiManager
 #include <PubSubClient.h>
 #include <ArduinoJson.h>          //https://github.com/bblanchon/ArduinoJson
-
+#define luminosidade A0  
+//#define umidade_solo A0
+//#define temperatura 
 
 //define your default values here, if there are different values in config.json, they are overwritten.
 //length should be max size + 1 
@@ -21,6 +21,7 @@ char sensor_id[5];
 char umid[26];
 char temp[30];
 char lum[31];
+int valor=0;
 
 //char blynk_token[33] = "1331";
 //default custom static IP
@@ -179,8 +180,8 @@ void setup_wifi_mqtt() {
   //if it does not connect it starts an access point with the specified name
   //here  "AutoConnectAP"
   //and goes into a blocking loop awaiting configuration
-  if (!wifiManager.autoConnect("MyGarden", "tccredes")) {
-    Serial.println("failed to connect and hit timeout");
+  if (!wifiManager.autoConnect("GardenLife", "tccredes")) {
+    Serial.println("Falha na conexao");
     delay(3000);
     //reset and try again, or maybe put it to deep sleep
     ESP.reset();
@@ -207,8 +208,8 @@ void setup_wifi_mqtt() {
     json["mqtt_port"] = mqtt_port;
     json["mqtt_user"] = mqtt_user;
     json["mqtt_passwd"] = mqtt_passwd;
-    //json["blynk_token"] = blynk_token;
     json["sensor_id"] = sensor_id;
+    //json["blynk_token"] = blynk_token;
 
     json["ip"] = WiFi.localIP().toString();
     json["gateway"] = WiFi.gatewayIP().toString();
@@ -224,7 +225,7 @@ void setup_wifi_mqtt() {
     configFile.close();
     //end save
   }
-  Serial.println("local ip");
+  Serial.println("IP LOCAL:");
   Serial.println(WiFi.localIP());
   Serial.println(WiFi.gatewayIP());
   Serial.println(WiFi.subnetMask());
@@ -252,14 +253,37 @@ void reconnect() {
       Serial.println("[STATUS] connected :)");
     } else {
       Serial.println("[STATUS] Failed :(");
-      //Serial.print("===> ");
-      //Serial.print(client.state());
+      Serial.println("RESPOSTA:");
+      Serial.println(client.state());
       Serial.println("Please, wait 5 seconds...");
       // Wait 5 seconds before retrying
       delay(5000);
     }
   }
 }
+
+
+void luminosidade_sensor()
+{
+  /*
+   * < 500 = Claro
+   * > 500 = Escuro
+   */
+  valor = analogRead(luminosidade);
+  client.publish(lum, String(valor).c_str());
+}
+
+void umidade_sensor()
+{
+   /* 
+    *  > 0 e < 400 = umido 
+    *  > 400 e < 800 = moderado
+    *  > 800 e < 1024 = seco 
+    */
+   //valor=analogRead(umidade_solo);  
+   //client.publish(umid, String(valor).c_str());
+}
+
 
 void loop() {
   // put your main code here, to run repeatedly:
@@ -268,9 +292,8 @@ void loop() {
       reconnect();  
   }
   client.loop();
-  client.publish(umid, "23");
+  //umidade_sensor();
+  luminosidade_sensor();
   delay(10000);
-  client.publish(temp, "23");
-  delay(10000);
-  client.publish(lum, "23"); 
+  
 }
