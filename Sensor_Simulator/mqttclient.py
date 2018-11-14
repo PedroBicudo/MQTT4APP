@@ -1,12 +1,9 @@
 import paho.mqtt.publish as mqtt
 import random as rd
 import time as tm
-from mosquitto_config import \
-    mqtt_ID
 
-
-
-print("""
+def logo():
+    print("""
 ==========================================================================
 =	 ____  _____ _   _ ____   ___  ____                              =
 =	/ ___|| ____| \ | / ___| / _ \|  _ \                             =
@@ -25,8 +22,11 @@ print("""
 --------------------------------------------------------------------------
 INICIANDO...
 --------------------------------------------------------------------------
-""")
-tm.sleep(2.0)
+    """)
+    tm.sleep(5.0)
+
+
+logo()
 while True:
     valores=rd.sample(range(0,100), 4)
     msgs=[{
@@ -41,7 +41,7 @@ while True:
         'payload': '%d' % valores[3]
     }]
 
+    # PUBLISH + AUTH 
+    mqtt.multiple(msgs, hostname='127.0.0.1', port=1883, client_id="SENSOR-PUB", auth={'username': 'mygarden', 'password': '123'} )
     print(msgs)
-    mqtt.multiple(msgs, hostname='127.0.0.1', port=1883, client_id=mqtt_ID, auth={'username': 'mygarden', 'password': '123'} )
     tm.sleep(10.0)
-
