@@ -2,11 +2,9 @@ import paho.mqtt.publish as mqtt
 import random as rd
 import time as tm
 from mosquitto_config import \
-    mqtt_ID, \
-    mqtt_server, \
-    mqtt_port, \
-    mqtt_user, \
-    mqtt_passwd
+    mqtt_ID
+
+
 
 print("""
 ==========================================================================
