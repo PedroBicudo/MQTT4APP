@@ -28,7 +28,7 @@ print("""
 INICIANDO...
 --------------------------------------------------------------------------
 """)
-tm.sleep(5.0)
+tm.sleep(2.0)
 while True:
     valores=rd.sample(range(0,100), 4)
     msgs=[{
