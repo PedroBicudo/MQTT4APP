@@ -25,7 +25,7 @@ INICIANDO...
     """)
     tm.sleep(5.0)
 
-
+mqtt_ID="SENSOR-PUB"
 logo()
 while True:
     valores=rd.sample(range(0,100), 4)
@@ -42,6 +42,6 @@ while True:
     }]
 
     # PUBLISH + AUTH 
-    mqtt.multiple(msgs, hostname='127.0.0.1', port=1883, client_id="SENSOR-PUB", auth={'username': 'mygarden', 'password': '123'} )
+    mqtt.multiple(msgs, hostname='127.0.0.1', port=1883, client_id=mqtt_ID, auth={'username': 'mygarden', 'password': '123'} )
     print(msgs)
     tm.sleep(10.0)
