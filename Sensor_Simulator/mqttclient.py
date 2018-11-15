@@ -25,7 +25,7 @@ INICIANDO...
     """)
     tm.sleep(5.0)
 
-mqtt_ID="SENSOR-PUB"
+mqtt_ID="teste"
 logo()
 while True:
     valores=rd.sample(range(0,100), 4)
