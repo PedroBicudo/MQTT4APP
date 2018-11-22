@@ -1,18 +1,44 @@
+/*
+Nome: mqtt.ino
+Data: 2018/11/22
+
+Sensores utilizados 
+  -> Luminosidade 
+  -> Temperatura DHT11
+  -> Umidade do solo 
+
+Extensões de portas digitais 
+  -> Conversor ads1115
+*/
+
+
+
+// NECESSÁRIOS PARA O PROJETO
 #include <FS.h>                   //this needs to be first, or it all crashes and burns...
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
-//needed for library
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>          //https://github.com/tzapu/WiFiManager
 #include <PubSubClient.h>
 #include <ArduinoJson.h>          //https://github.com/bblanchon/ArduinoJson
-#define luminosidade A0  
-//#define umidade_solo A0
-//#define temperatura 
+#include <Wire.h>
+#include <Adafruit_ADS1015.h>
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
+
+
+// DEFINES DA VIDA!
+#define luminosidade 2
+#define umidade_solo 3
+#define DHT_PORT D5
+#define DHT_TYPE DHT11
+#define ADS1 D1
+#define ADS2 D2
 
 //define your default values here, if there are different values in config.json, they are overwritten.
 //length should be max size + 1 
 
+// Variaveis essenciais 
 char mqtt_server[40];
 char mqtt_port[6];
 char mqtt_user[20];
@@ -21,18 +47,15 @@ char sensor_id[5];
 char umid[26];
 char temp[30];
 char lum[31];
-int valor=0;
+int16_t valor=0;
 
-//char blynk_token[33] = "1331";
-//default custom static IP
-//char static_ip[16] = "10.0.1.56";
-//char static_gw[16] = "10.0.1.1";
-//char static_sn[16] = "255.255.255.0";
+
 
 
 WiFiClient esp8266;
 PubSubClient client(esp8266);
-
+Adafruit_ADS1115 ads(0x48);  /* Usado por padrao no ads1115 */
+DHT dht(DHT_PORT, DHT_TYPE);
 
 void mqtt_callback(char* topic, byte* payload, unsigned int length)
 {
@@ -56,10 +79,15 @@ void saveConfigCallback () {
 
 void setup()
 {
+  Wire.begin(ADS2, ADS1);
   Serial.begin(115200);
   Serial.println();
+  dht.begin();
+  ads.begin();
   setup_wifi_mqtt();
 }
+  
+  
 
 void setup_wifi_mqtt() {
   // put your setup code here, to run once:
@@ -72,6 +100,8 @@ void setup_wifi_mqtt() {
   //read configuration from FS json
   Serial.println("mounting FS...");
 
+
+  // Aqui salva a porra no FLASH
   if (SPIFFS.begin()) {
     Serial.println("mounted file system");
     if (SPIFFS.exists("/config.json")) {
@@ -255,7 +285,6 @@ void reconnect() {
       Serial.println("[STATUS] Failed :(");
       Serial.println("RESPOSTA:");
       Serial.println(client.state());
-      Serial.println("Please, wait 5 seconds...");
       // Wait 5 seconds before retrying
       delay(5000);
     }
@@ -263,25 +292,46 @@ void reconnect() {
 }
 
 
+// Esta no conversor 
 void luminosidade_sensor()
 {
   /*
    * < 500 = Claro
    * > 500 = Escuro
    */
-  valor = analogRead(luminosidade);
+  valor = ads.readADC_SingleEnded(luminosidade); // luminosidade 2
+  valor=map(valor, 0,20000, 100, 0);
+  //Porcentagem do sensor
   client.publish(lum, String(valor).c_str());
+  Serial.print("Luminosidade: "); Serial.print(valor);
 }
 
+// Esta no conversor 
 void umidade_sensor()
 {
    /* 
     *  > 0 e < 400 = umido 
     *  > 400 e < 800 = moderado
-    *  > 800 e < 1024 = seco 
+    *  > 800 e < 1024 = seco
     */
-   //valor=analogRead(umidade_solo);  
-   //client.publish(umid, String(valor).c_str());
+   valor = ads.readADC_SingleEnded(umidade_solo); // umidade 3
+   // Porcentagem do sensor
+   valor=map(valor, 0,20000, 100, 0); // Porcentagem 
+   client.publish(umid, String(valor).c_str());
+   Serial.print("Umidade: "); Serial.print(valor); 
+}
+
+
+void temperatura()
+{
+  /*
+  Sensor DHT11 
+  Nota: Usado em Graus Celsius
+  */
+  
+  valor = dht.readTemperature();
+  client.publish(temp, String(valor).c_str());
+  Serial.print("Temperatura: "); Serial.print(valor); 
 }
 
 
@@ -292,8 +342,9 @@ void loop() {
       reconnect();  
   }
   client.loop();
-  //umidade_sensor();
+  umidade_sensor();
   luminosidade_sensor();
+  temperatura();
   delay(10000);
   
 }
