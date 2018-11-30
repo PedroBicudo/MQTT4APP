@@ -1,13 +1,6 @@
-import paho.mqtt.client as mqtt
-import connectors as cn
-from mosquitto_config import \
-    mqtt_ID, \
-    mqtt_server, \
-    mqtt_port, \
-    mqtt_user, \
-    mqtt_passwd, \
-    mqtt_qos
-
+from paho.mqtt.client import *
+from connectors import *
+from mosquitto_config import *
 
 def on_connect(client, userdata, flags, rc):
     print("Connected :)")
@@ -15,15 +8,13 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_message(client, userdata, msg):
-    _id = str(msg.topic[12:17])
-    topico = str(msg.topic[18:])
-    valor = int(msg.payload)
-
-    # Enviar Back4app
-    cn.connect_back4app(_id, topico, valor)
+    steps = Msteps( str(msg.topic), int(msg.payload), back_app_id, back_rest_id)
+    steps.filtro_id()
+    steps.sensor()
+    steps.connect_back4app()
 
 
-client = mqtt.Client( "%s" % mqtt_ID )
+client = Client( "%s" % mqtt_ID )
 client.on_connect = on_connect
 client.on_message = on_message
 
@@ -32,8 +23,8 @@ if mqtt_user and mqtt_passwd:
     client.connect("%s" % mqtt_server, int(mqtt_port), 60)
     client.loop_forever()
 else:
-    print("Usuário ou senha não informados")
-    print("Falha na conexao")
+   print("Usuário ou senha não informados")
+   print("Falha na conexao")
 
 
 
