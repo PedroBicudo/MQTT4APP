@@ -54,9 +54,15 @@ class Msteps():
             "Content-Type": "application/json"
         }
 
-        connection = http.client.HTTPSConnection("parseapi.back4app.com", 443)
-        connection.connect()
-        connection.request('POST', '/classes/sensor/', insert_data, insert_id)
-        results = str(json.loads(connection.getresponse().read()))
-        print("\t%s" %results)
+        try:
+            connection = http.client.HTTPSConnection("parseapi.back4app.com", 443)
+            connection.connect()
+            connection.request('POST', '/classes/sensor/', insert_data, insert_id)
+            results = str(json.loads(connection.getresponse().read()))
+            print("\t%s" %results)
+
+        except Exception as error:
+            print(
+                "Ops alguma coisa aconteceu!\n", 
+                "Tipo de Erro:", error)
 
