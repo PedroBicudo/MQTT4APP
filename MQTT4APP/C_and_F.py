@@ -1,3 +1,13 @@
+'''
+
+Escrito: SRKFY
+Data: 30/11/2018
+Nome: C_and_F.py
+
+Função:
+    -> Filtragem e tratamento de informações
+    
+'''
 import json, http.client
 
 class Msteps():
