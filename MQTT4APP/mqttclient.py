@@ -1,10 +1,22 @@
+'''
+Escrito: SRKFY 
+Data: 30/11/2018
+Nome: mqttclient.py
+
+
+Função: 
+    -> Conexão com o Broker MQTT 
+    -> Chamar a classe Msteps
+
+'''
+
 from paho.mqtt.client import *
-from connectors import *
+from C_and_F import *
 from mosquitto_config import *
 
 def on_connect(client, userdata, flags, rc):
     print("Connected :)")
-    client.subscribe("/home/horta/#", mqtt_qos)  # Topicos + Qos
+    client.subscribe("/home/horta/+/+", mqtt_qos)  # Topicos + Qos
 
 
 def on_message(client, userdata, msg):
@@ -25,7 +37,3 @@ if mqtt_user and mqtt_passwd:
 else:
    print("Usuário ou senha não informados")
    print("Falha na conexao")
-
-
-
-
