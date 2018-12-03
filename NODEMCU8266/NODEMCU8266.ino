@@ -267,9 +267,9 @@ void setup_wifi_mqtt() {
   {
     Serial.println("Conectado ao Broker com Sucesso ^^");
     Serial.println("Inserindo valor teste");    
-    snprintf(temp, 30, "/home/horta/id_%s/temperatura", sensor_id ); // temperatura
-    snprintf(umid, 26, "/home/horta/id_%s/umidade", sensor_id ); // umidade
-    snprintf(lum, 31, "/home/horta/id_%s/luminosidade", sensor_id ); // luminosidade
+    snprintf(temp, 30, "/home/horta/%s/temperatura", sensor_id ); // temperatura
+    snprintf(umid, 26, "/home/horta/%s/umidade", sensor_id ); // umidade
+    snprintf(lum, 31, "/home/horta/%s/luminosidade", sensor_id ); // luminosidade
     client.publish( temp , "123");
   }
   }
