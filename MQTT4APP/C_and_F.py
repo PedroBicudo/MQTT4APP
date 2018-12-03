@@ -19,7 +19,7 @@ class Msteps():
 
     def filtro_id(self):
         for numid in range(len(mic_id)):
-            if mic_id[numid] in topico:
+            if mic_id[numid] in self.topico:
                 self._id = mic_id[numid]
                 print(mic_id[numid])
                 break
@@ -28,7 +28,7 @@ class Msteps():
 
     def sensor(self):
        for nums in range(len(mic_sensors)):
-            if mic_sensors[nums] in topico:
+            if mic_sensors[nums] in self.topico:
                 print(mic_sensors[nums])
                 self.topico=mic_sensors[nums]
                 break
@@ -59,3 +59,5 @@ class Msteps():
             print(
                 "Ops alguma coisa aconteceu!\n", 
                 "Tipo de Erro:", error)
+
+
