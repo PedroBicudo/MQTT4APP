@@ -1,14 +1,13 @@
 '''
-
 Escrito: SRKFY
 Data: 30/11/2018
 Nome: C_and_F.py
-
 Função:
     -> Filtragem e tratamento de informações
     
 '''
 import json, http.client
+from mosquitto_config import *
 
 class Msteps():
 
@@ -19,27 +18,22 @@ class Msteps():
         self.back_rest_id = back_rest_id
 
     def filtro_id(self):
-        for id_e in range(0, len(self.topico)):
-            if self.topico[id_e:id_e+3] == "id_":
-                self.posicao = id_e+3
+        for numid in range(len(mic_id)):
+            if mic_id[numid] in topico:
+                self._id = mic_id[numid]
+                print(mic_id[numid])
                 break
+            else:
+                pass
 
-        for id_b in range(self.posicao, len(self.topico)):
-            if self.topico[id_b:id_b+1] == "/":
-                self._id = self.topico[self.posicao:id_b]
-                break
-        
     def sensor(self):
-        for sensor in range(1, len(self.topico)):
-                if self.topico[sensor:sensor+7] == "umidade":
-                    self.topico ="umidade"
-                    break
-                if self.topico[sensor:sensor+11] == "temperatura":
-                    self.topico ="temperatura"
-                    break
-                if self.topico[sensor:sensor+12] == "luminosidade":
-                    self.topico ="luminosidade"
-                    break
+       for nums in range(len(mic_sensors)):
+            if mic_sensors[nums] in topico:
+                print(mic_sensors[nums])
+                self.topico=mic_sensors[nums]
+                break
+            else:
+                pass
     
     def connect_back4app(self):
         insert_data = json.dumps({
@@ -65,4 +59,3 @@ class Msteps():
             print(
                 "Ops alguma coisa aconteceu!\n", 
                 "Tipo de Erro:", error)
-
