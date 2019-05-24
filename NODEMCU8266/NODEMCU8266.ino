@@ -101,7 +101,7 @@ void setup_wifi_mqtt() {
   Serial.println("mounting FS...");
 
 
-  // Aqui salva a porra no FLASH
+  // Aqui salva as configuracoes no FLASH
   if (SPIFFS.begin()) {
     Serial.println("mounted file system");
     if (SPIFFS.exists("/config.json")) {
