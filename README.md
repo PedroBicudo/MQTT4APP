@@ -6,7 +6,7 @@
 ## Serviços utilizados:
 - MOSQUITTO
 
-## Linguagens de programação
+## Linguagens de programação:
 - C
 - Python ( versao 3 )
 
