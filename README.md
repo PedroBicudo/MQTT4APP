@@ -1,17 +1,12 @@
-==== Configurações do MQTT ====
+# Projeto BACK4APP
+
+<p> Esse repositório tem como objetivo armazenar os arquivos essenciais para a configuração do protocolo MQTT em Back-END, que irá enviar as informações obtidas ao Back4App.</p>
 
 
-Serviços utilizados:
+## Serviços utilizados:
+- MOSQUITTO
 
-	-> MOSQUITTO
-
-Linguagens de programação:
-
-	-> C
-
-	-> Python3
-
-Esse repositório tem como objetivo armazenar os arquivos essenciais para a configuração do protocolo MQTT em Back-END, que irá enviar as informações obtidas ao Back4App.
-
-
+## Linguagens de programação
+- C
+- Python ( versao 3 )
 
