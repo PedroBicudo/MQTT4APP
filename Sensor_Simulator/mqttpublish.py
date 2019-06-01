@@ -1,4 +1,4 @@
-"""Script responsavel por simular um sensor."""
+"""Script responsavel por simular um sensor mqtt."""
 import paho.mqtt.publish as mqtt
 import random as rd
 import time as tm
