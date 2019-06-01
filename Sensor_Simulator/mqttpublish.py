@@ -1,47 +1,107 @@
+"""Script responsavel por simular um sensor."""
 import paho.mqtt.publish as mqtt
 import random as rd
 import time as tm
+import sys
 
-def logo():
-    print("""
-==========================================================================
-=	 ____  _____ _   _ ____   ___  ____                              =
-=	/ ___|| ____| \ | / ___| / _ \|  _ \                             =
-=	\___ \|  _| |  \| \___ \| | | | |_) |                            =
-=	 ___) | |___| |\  |___) | |_| |  _ <                             =
-=	|____/|_____|_| \_|____/ \___/|_| \_\                            =
-=                                                                        =
-=           ____ ___ __  __ _   _ _        _  _____ ___  ____            =
-=           / ___|_ _|  \/  | | | | |      / \|_   _/ _ \|  _ \          =
-=           \___ \| || |\/| | | | | |     / _ \ | || | | | |_) |         =
-=            ___) | || |  | | |_| | |___ / ___ \| || |_| |  _ <          =
-=           |____/___|_|  |_|\___/|_____/_/   \_\_| \___/|_| \_\         =
-=                                                                        =
-==========================================================================
 
---------------------------------------------------------------------------
-INICIANDO...
---------------------------------------------------------------------------
-    """)
-    tm.sleep(5.0)
+def makeRandomData(topic, mqtt_ID):
+    """Gerar valores aleatorios em tres topicos.
 
-mqtt_ID="teste"
-logo()
-while True:
-    valores=rd.sample(range(0,100), 4)
-    msgs=[{
-        'topic':'/home/horta/%s/temperatura' % mqtt_ID,
-        'payload': '%d' % valores[1]
-    },{
-        'topic':'/home/horta/%s/umidade' % mqtt_ID,
-        'payload': '%d' % valores[2]
-   },
-    {
-        'topic':'/home/horta/%s/luminosidade' % mqtt_ID,
-        'payload': '%d' % valores[3]
-    }]
+    topic: Topico a ser acessado
+    mqtt_ID: Identificacao da conexao
 
-    # PUBLISH + AUTH 
-    mqtt.multiple(msgs, hostname='127.0.0.1', port=1883, client_id=mqtt_ID, auth={'username': 'mygarden', 'password': '123'} )
-    print(msgs)
-    tm.sleep(10.0)
+    Tipo de retorno: List
+    """
+    valores = rd.sample(range(0, 100), 4)
+    patt_topic = "{}{}".format(topic, mqtt_ID)
+    msgs = [
+            {
+                'topic': '{}/temperatura'.format(patt_topic),
+                'payload': '{}'.format(valores[1])
+            },
+            {
+                'topic': '{}/umidade'.format(patt_topic),
+                'payload': '{}'.format(valores[2])
+            },
+            {
+                'topic': '{}/luminosidade'.format(patt_topic),
+                'payload': '{}'.format(valores[3])
+            }
+           ]
+
+    return msgs
+
+
+def makePublish(sleep, mqtt_ID, host, auth, port, **kwargs):
+    """Loop para realizar as publicacoes de valores aleatorios.
+
+    sleep: Intervalo entre mensagens
+    mqtt_ID: Identificacao da conexao
+    host: Endereco do Broker
+    port: Porta de acesso usado pelo Broker
+
+    Tipo de retorno: None
+    """
+    print('='*100)
+    while True:
+        msgs = makeRandomData(mqtt_ID=mqtt_ID, **kwargs)
+        # PUBLISH + AUTH
+        mqtt.multiple(
+                        msgs,
+                        hostname=host,
+                        port=port,
+                        client_id=mqtt_ID,
+                        auth=auth
+                    )
+        print('\n'.join(str(topic) for topic in msgs))
+        print('='*100)
+        tm.sleep(sleep)
+
+
+def main(topic='/home/horta/',
+         mqtt_ID='teste',
+         sleep=10.0,
+         host='127.0.0.1',
+         port=1883,
+         user='mygarden',
+         password='123'
+         ):
+    """Conectar ao Broker e enviar valores aleatorios em topicos.
+
+    topic: Topico a ser usado
+            Estrutura:
+                /caminho/do/topico/
+
+    mqtt_ID: Identificacao da conexao
+    sleep: Intervalo entre mensagens
+    host: Endereco do Broker
+    port: Porta de acesso usado pelo Broker
+    user: Usuario para autenticacao
+    password: Senha para autenticacao
+
+    Tipo de retorno: None
+    """
+    assert float(sleep), 'O formato de time deve ser int ou float.'
+    assert port.isnumeric(), 'O formato de time deve ser int.'
+    auth = {'username': user, 'password': password}
+
+    makePublish(
+                sleep=float(sleep),
+                mqtt_ID=mqtt_ID,
+                host=host,
+                auth=auth,
+                port=int(port),
+                topic=topic
+                )
+
+
+if __name__ == '__main__':
+    args = sys.argv[1:]
+    try:
+        main(*args)
+    except Exception as err:
+        print("""
+    Como usar?
+    mqttpublish.py  [topic] [mqtt_ID] [sleep] [host] [port] [user] [password]
+              """)
