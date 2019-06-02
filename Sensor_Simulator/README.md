@@ -19,6 +19,6 @@ python mqttpublish.py /home/horta/ teste 10.0 127.0.0.1 1883 mygarden 123
 ```
 
 ## Estrutura dos tópicos:
-|   caminho   |   ID  | tipo de sensor |
-|-------------|-------|----------------|
-| /home/horta | teste | temperatura    |
+|    Caminho   |   ID   | Tipo de sensor |
+|--------------|--------|----------------|
+| /home/horta/ | teste/ |  temperatura   |
