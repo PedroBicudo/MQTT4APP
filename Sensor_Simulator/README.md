@@ -1,7 +1,7 @@
 # Simulador de sensores
 
 ## Qual a função do arquivo?
-<p> O arquivo mqttpublish tem a função de enviar valores aleatórios ao Broker para testes de funcionamento</p>
+<p> O arquivo mqttpublish tem a função de enviar valores aleatórios ao Broker para testes de funcionamento.</p>
 
 ## Quais os tipos de sensores que enviaram os dados aleatórios?
 - temperatura;
