@@ -1,9 +1,9 @@
 # Simulador de sensores
 
 ## Qual a função do arquivo?
-<p> O arquivo mqttpublish tem a funcao de enviar valores aleatorios ao Broker para testes de funcionamento</p>
+<p> O arquivo mqttpublish tem a função de enviar valores aleatórios ao Broker para testes de funcionamento</p>
 
-## Quais os tipos de sensores que enviaram os dados aleatorios?
+## Quais os tipos de sensores que enviaram os dados aleatórios?
 - temperatura;
 - umidade;
 - luminosidade.
@@ -18,7 +18,7 @@ python mqttpublish.py  [topico] [ID] [intervalo] [broker_ip] [port] [usuario] [s
 python mqttpublish.py /home/horta/ teste 10.0 127.0.0.1 1883 mygarden 123
 ```
 
-## Estrutura dos topicos
+## Estrutura dos tópicos:
 |   caminho   |   ID  | tipo de sensor |
 |-------------|-------|----------------|
 | /home/horta | teste | temperatura    |
