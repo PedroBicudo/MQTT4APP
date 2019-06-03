@@ -2,8 +2,8 @@
 # Introdução:
 <p>O arquivo mqtt4app.py tem a funcao de conectar, monitorar e enviar dados referentes as configuracoes realizadas manualmente ou no arquivo INI.</p>
 
-# Requisito:
-+ Python 3.
+## Versão de Python utilizada:
++ Python versão 3.7.
 
 # Como usar?
 ## Metodo 1 - Via Import:
