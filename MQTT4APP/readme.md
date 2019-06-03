@@ -5,6 +5,7 @@
 # Como usar?
 ## Metodo 1 - Via Import:
 
+#### Etapas de importação
 ```
 # Importando a classe 
 from mqtt4app import Mqtt4App
@@ -19,7 +20,7 @@ mqtt4app = Mqtt4App(
 # Efetuar a conexao
 mqtt4app.connectToBroker(auth={'username': username, 'password': passwd})
 
-# Mostrar dados inseridos
+# Mostrar informacoes referentes ao servidor Broker( ip, porta, topico, qos )
 print(mqtt4app)
 ```
 #### Exemplo de criação de instância:
