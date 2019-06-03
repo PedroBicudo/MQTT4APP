@@ -21,7 +21,7 @@ class Mqtt4App(Client):
     mqtt4app = Mqtt4App(
                         broker_address, port, qos,
                         topic_path, client_id, back_app_id,
-                        back_rest_id, back_dbname
+                        back_rest_id, back_dbname, sensors, micr_ids
                         )
 
     # Efetuar a conexao
@@ -173,30 +173,3 @@ class Mqtt4App(Client):
         except Exception as error:
             print("Ops alguma coisa aconteceu!")
             print("Tipo de Erro: {}".format(error))
-
-
-def main(auth=None, *args):
-    """Iniciar monitoramento e envio de dados.
-
-    Tipo de retorno: None
-    """
-    mqtt4app = Mqtt4App(*args)
-    mqtt4app.connectToBroker(auth)
-
-
-if __name__ == "__main__":
-    import sys
-    howto = """
-    Como usar?
-
-    \tpython [username:password] broker_address port qos topic_path client_id back_app_id back_rest_id back_dbname
-    """ # NOQA
-    args = sys.argv[1:]
-    auth = None
-    args_vrf = len(args) is 8 or len(args) is 9
-    assert args_vrf, "Existem parametros em falta.\n{}".format(howto)
-
-    if ':' in args[0]:
-        auth = dict(zip(['username', 'password'], args[0].split(':')))
-        del args[0]
-    main(auth, *args)
