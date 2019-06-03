@@ -78,10 +78,10 @@ class Mqtt4App(Client):
         """Mostrar informacoes inseridas."""
         return """
         Broker: {}:{}
-        Topic Path: {}{}
+        Topic Path: {}
         Qos: {}
         """.format(self.broker_address, self.port, self.topic_path,
-                   self.client_id, self.qos
+                   self.qos
                    )
 
     def connectToBroker(self, auth=None):
