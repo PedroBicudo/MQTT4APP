@@ -17,7 +17,7 @@ python mygarden:123 127.0.0.1 1883 0 /home/horta test 123123123 123123123 sensor
 python 127.0.0.1 1883 0 /home/horta test 123123123 123123123 sensores
 ```
 
-## Metodo 2 - via arquivo .INI:
+## Metodo 2 - Via arquivo .INI:
 <p>Esse metodo é dividido em duas etapas ( configuração de arquivo e execução main.py).</p>
 
 ### Etapa 1 - Configuração do arquivo .INI:
@@ -89,7 +89,7 @@ back_rest_id = [omitido] :)
 back_dbname = sensores
 ```
 
-### Etapa 2 - execução do arquivo Main:
+### Etapa 2 - Execução do arquivo Main:
 ```
 python main.py
 ```
