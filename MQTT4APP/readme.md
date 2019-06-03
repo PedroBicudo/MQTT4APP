@@ -3,18 +3,39 @@
 <p>O arquivo mqtt4app.py tem a funcao de conectar, monitorar e enviar dados referentes as configuracoes realizadas manualmente ou no arquivo INI.</p>
 
 # Como usar?
-## Metodo 1 - Via linha de comando:
+## Metodo 1 - Via Import:
 ```
-python [username:password] broker_address port qos topic_path client_id back_app_id back_rest_id back_dbname
+# Instancia 
+mqtt4app = Mqtt4App(
+                        broker_address, port, qos,
+                        topic_path, client_id, back_app_id,
+                        back_rest_id, back_dbname, sensors, micr_ids
+                        )
+
+# Efetuar a conexao
+mqtt4app.connectToBroker(auth={'username': username, 'password': passwd})
+
+# Mostrar dados inseridos
+print(mqtt4app)
 ```
-#### Exemplo com Autenticação:
+#### Exemplo de criação de instância:
 ```
-python mygarden:123 127.0.0.1 1883 0 /home/horta test 123123123 123123123 sensores
+mqtt4app = Mqtt4App(
+                        "127.0.0.1", 1883, 0,
+                        "/home/horta/", "teste", 123123,
+                        123123, "sensores", 
+                        ["umidade", "luminosidade", "temperatura"], 
+                        ["nodeA", "nodeB", "nodeC"]
+                    )
 ```
 
+#### Exemplo com Autenticação:
+```
+mqtt4app.connectToBroker(auth={'username': 'mygarden', 'password': '123'})
+```
 #### Exemplo sem Autenticação:
 ```
-python 127.0.0.1 1883 0 /home/horta test 123123123 123123123 sensores
+mqtt4app.connectToBroker()
 ```
 
 ## Metodo 2 - Via arquivo .INI:
@@ -28,12 +49,12 @@ mosquitto_config.ini
 mqtt_server = Endereço do servidor Broker
 mqtt_port = Porta utilizada pelo servidor Broker
 mqtt_ID = Identificacao da conexao a ser realizada
-
-# Não obrigatório, caso não seja necessário, deixar em branco.
-mqtt_user = usuario de autenticacao
-mqtt_passwd = senha de autenticacao
 mqtt_qos = Nivel de qualidade de serviço
 mqtt_topic = /caminho/para/o/sensor
+
+# Caso não seja necessária, deixar os campos de autenticação em branco.
+mqtt_user = usuario de autenticacao
+mqtt_passwd = senha de autenticacao
 
 [SENSORS_SETTINGS]
 sensors = Nome dos sensores disponiveis
@@ -71,22 +92,10 @@ back_dbname = sensores
 mosquitto_config.ini
 ```
 [SERVER_SETTINGS]
-mqtt_server = 127.0.0.1
-mqtt_port = 1883
-mqtt_ID = TCCREDES
+[...]
 mqtt_user = 
 mqtt_passwd = 
-mqtt_qos = 0
-mqtt_topic = /home/horta/
-
-[SENSORS_SETTINGS]
-sensors = umidade, temperatura, luminosidade
-micr_ids = node_hortaNorte, node_hortaLeste, node_hortaSul, node_hortaOeste
-
-[BACK4APP]
-back_app_id = [omitido] :)
-back_rest_id = [omitido] :)
-back_dbname = sensores
+[...]
 ```
 
 ### Etapa 2 - Execução do arquivo Main:
