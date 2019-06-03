@@ -4,7 +4,11 @@
 
 # Como usar?
 ## Metodo 1 - Via Import:
+
 ```
+# Importando a classe 
+from mqtt4app import Mqtt4App
+
 # Instancia 
 mqtt4app = Mqtt4App(
                         broker_address, port, qos,
