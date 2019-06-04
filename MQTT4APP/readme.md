@@ -8,7 +8,7 @@
 # Como usar?
 ## Metodo 1 - Via Import:
 
-#### Etapas de importação
+#### Etapas de importação:
 ```
 # Importando a classe 
 from mqtt4app import Mqtt4App
