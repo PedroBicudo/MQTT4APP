@@ -137,9 +137,9 @@ class Mqtt4App(Client):
         """
         result = lambda data: None if not data or len(data) > 1 else data[0]
         sensor = list(filter(lambda x: x in self.current_topic, self.sensors))
-        id = list(filter(lambda x: x in self.current_topic, self.micr_ids))
+        _id = list(filter(lambda x: x in self.current_topic, self.micr_ids))
         self.topic = result(sensor)
-        self.mic_id = result(id)
+        self.mic_id = result(_id)
 
     @dataVerify
     def __sendDataToBack4App__(self):
