@@ -5,7 +5,7 @@ import time as tm
 import sys
 
 
-def makeRandomData(topic, mqtt_ID):
+def makeRandomData(topic: str, mqtt_ID: str) -> dict:
     """Gerar valores aleatorios em tres topicos.
 
     topic: Topico a ser acessado
@@ -33,7 +33,7 @@ def makeRandomData(topic, mqtt_ID):
     return msgs
 
 
-def makePublish(sleep, mqtt_ID, host, auth, port, **kwargs):
+def makePublish(sleep: float, mqtt_ID: str, host: str, auth: dict, port: int, **kwargs):
     """Loop para realizar as publicacoes de valores aleatorios.
 
     sleep: Intervalo entre mensagens
