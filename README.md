@@ -13,7 +13,7 @@ Windows
 python -m unittest discover tests
 ```
 
-Apresentação da interface de linha de comando
+## Apresentação da interface de linha de comando
 ```
 $ python tcc.py --help
 usage: tcc.py [-h] -server MQTT_SERVER -topics [TOPICS [TOPICS ...]]
