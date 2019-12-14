@@ -1,11 +1,7 @@
 """Classe responsavel por executar o projeto."""
 from http.client import HTTPSConnection
 from paho.mqtt.client import Client
-from datetime import datetime
-import logging
-import socket
 import json
-import os
 
 
 class Mqtt4App(Client):
