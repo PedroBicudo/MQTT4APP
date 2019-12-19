@@ -11,7 +11,18 @@ class Mqtt4App(Client):
 
     def __init__(self, back_db_name=None, back_app_id=None, back_rest_id=None,
                  topics=[], qos=0, *args, **kwargs):
+        """Atributos essenciais para o projeto.
 
+        Parameters
+        ----------
+        back_db_name: str
+            Nome do banco de dados back4app.
+        back_app_id: str
+            Chave app ID disponibilizada pelo back4app.
+        back_rest_id: str
+            Chave rest ID disponibilizada pelo back4app.
+
+        """
         super().__init__(*args, **kwargs)
         self.back_app_id = back_app_id
         self.back_rest_id = back_rest_id
@@ -64,7 +75,21 @@ class Mqtt4App(Client):
         self._send_data_to_back4app(json_data)
 
     def get_json_data(self, payload, topic):
-        """Gerar JSON com a estrutura de envio para o trabalho."""
+        """Gerar JSON com a estrutura de envio para o trabalho.
+        
+        Parameters
+        ----------
+        payload: str
+            Mensagem obtida pelo protocolo.
+        topic: str
+            Topico obtido pelo protocolo.
+        
+        Returns
+        ----------
+        str
+            Mensagem convertida para o formato JSON.
+
+        """
         return json.dumps(
                          {
                             "topic": f"{topic}",
@@ -73,7 +98,14 @@ class Mqtt4App(Client):
         )
 
     def get_json_connection_id(self):
-        """Informacoes essenciais para a conexao com o Back4App."""
+        """Informacoes essenciais para a conexao com o Back4App.
+        
+        Returns
+        ----------
+        dict
+            Cabecalho com dados essenciais para a conexao com o back4app.
+
+        """
         return {
                     "X-Parse-Application-Id": self.back_app_id,
                     "X-Parse-REST-API-Key": self.back_rest_id,
@@ -81,6 +113,14 @@ class Mqtt4App(Client):
                }
 
     def _get_class_path(self):
+        """Obter o caminho do banco de dados no back4app.
+        
+        Returns
+        ----------
+        str
+            Caminho do banco de dados criado no back4app.
+
+        """
         return f'/classes/{self.back_db_name}/'
 
     def _send_data_to_back4app(self, data):
@@ -90,10 +130,9 @@ class Mqtt4App(Client):
         ----------
         classpath: str
             Localizacao do banco NoSQL.
-
-        data: JSON
+        data: str
             JSON com informacoes relacionadas ao topico.
-            ex: {"topico": "abc", "valor": 123}
+            ex: '{"topico": "abc", "valor": 123}'
 
         """
         back_ids = self.back_app_id and self.back_rest_id
