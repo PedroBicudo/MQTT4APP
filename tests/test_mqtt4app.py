@@ -12,9 +12,6 @@ class Mqtt4AppTests(unittest.TestCase):
             back_db_name='teste'
             )
 
-    def test_connection(self):
-        pass
-
     def test_tuple_to_list(self):
         result = self.mqtt4app._convert_to_tuple_list(list('abc'))
         answer =[('a', 0), ('b', 0), ('c', 0)]
