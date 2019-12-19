@@ -26,6 +26,3 @@ class Mqtt4AppTests(unittest.TestCase):
             result, "/classes/teste/", 
             f"{result} deveria ser /classes/teste/"
         )
-
-    def tearDown(self):
-        self.mqtt4app.disconnect()
