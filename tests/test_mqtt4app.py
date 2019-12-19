@@ -9,10 +9,8 @@ class Mqtt4AppTests(unittest.TestCase):
     def setUp(self):
         self.mqtt4app = Mqtt4App(
             topics=['a', 'b', 'c'], 
-            back_db_name='teste',
-            transport="websockets"
+            back_db_name='teste'
             )
-        self.mqtt4app.connect("broker.mqttdashboard.com", 8000)
 
     def test_connection(self):
         pass
